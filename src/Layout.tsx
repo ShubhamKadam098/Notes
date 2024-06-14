@@ -3,6 +3,7 @@ import Footer from "./components/Footer/Footer";
 import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "./contexts/theme";
 import { useEffect, useState } from "react";
+import Sidebar from "./components/SideBar/Sidebar";
 
 const Layout = () => {
   let mode;
@@ -31,8 +32,11 @@ const Layout = () => {
         <main className="">
           <section className="mx-auto flex min-h-screen max-w-screen-2xl flex-col border border-white">
             <Header />
-            <div className="flex-grow">
-              <Outlet />
+            <div className="flex flex-grow bg-light-primary dark:bg-dark-primary">
+              <Sidebar />
+              <div className="flex-1">
+                <Outlet />
+              </div>
             </div>
             <Footer />
           </section>
