@@ -1,5 +1,4 @@
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "./contexts/theme";
 import { useEffect, useState } from "react";
@@ -28,7 +27,6 @@ const Layout = () => {
                 <Outlet />
               </div>
             </div>
-            <Footer />
           </section>
         </main>
       </ThemeProvider>
