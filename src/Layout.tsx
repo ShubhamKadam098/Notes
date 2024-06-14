@@ -30,7 +30,7 @@ const Layout = () => {
     <>
       <ThemeProvider value={{ themeMode, lightTheme, darkTheme }}>
         <main className="">
-          <section className="mx-auto flex min-h-screen max-w-screen-2xl flex-col border border-white">
+          <section className="mx-auto flex min-h-screen max-w-screen-2xl flex-col">
             <Header />
             <div className="flex flex-grow bg-light-primary dark:bg-dark-primary">
               <Sidebar />

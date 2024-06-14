@@ -3,7 +3,7 @@ import { Button } from "./components/ui/button";
 function App() {
   return (
     <main className="min-h-screen">
-      <section className="container mx-auto max-w-screen-2xl">
+      <section className="max-w-screen-[1920px] container mx-auto">
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
         <Button>Add</Button>
       </section>
