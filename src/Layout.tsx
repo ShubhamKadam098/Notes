@@ -4,21 +4,11 @@ import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "./contexts/theme";
 import { useEffect, useState } from "react";
 import Sidebar from "./components/SideBar/Sidebar";
+import useThemeDetector from "./hooks/useThemeDetector";
 
 const Layout = () => {
-  let mode;
-  if (
-    localStorage.getItem("color-theme") === "dark" ||
-    (!("color-theme" in localStorage) &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
-    mode = "dark";
-    document.documentElement.classList.add("dark");
-  } else {
-    mode = "light";
-    document.documentElement.classList.remove("dark");
-  }
-  const [themeMode, setThemeMode] = useState(mode);
+  const isDarkTheme = useThemeDetector();
+  const [themeMode, setThemeMode] = useState(isDarkTheme ? "dark" : "light");
   const darkTheme = () => setThemeMode("dark");
   const lightTheme = () => setThemeMode("light");
 
