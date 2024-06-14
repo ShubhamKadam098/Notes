@@ -5,13 +5,13 @@ const Sidebar = () => {
   return (
     <aside
       id="default-sidebar"
-      className="z-40 hidden w-1/5 max-w-48 -translate-x-full border-r border-slate-300 text-sm transition-transform dark:border-slate-600 sm:translate-x-0 md:block"
+      className="z-40 hidden w-1/5 max-w-60 -translate-x-full border-r border-slate-300 bg-light-secondary text-sm transition-transform dark:border-slate-600 dark:bg-dark-secondary sm:translate-x-0 md:block"
       aria-label="Sidebar"
     >
-      <div className="h-full overflow-y-auto bg-gray-50 px-3 py-4 dark:bg-gray-800">
+      <div className="overflow-y-autopx-3 h-full py-4">
         <ul className="flex h-full flex-col justify-between space-y-2 font-medium">
-          <div className="">
-            <li>
+          <div className="flex flex-col gap-3 text-[16px] font-semibold">
+            <li className="rounded-md">
               <Link
                 to="/"
                 className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
