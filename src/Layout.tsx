@@ -7,14 +7,19 @@ import useThemeDetector from "./hooks/useThemeDetector";
 
 const Layout = () => {
   const isDarkTheme = useThemeDetector();
-  const [themeMode, setThemeMode] = useState(isDarkTheme ? "dark" : "light");
+  const [themeMode, setThemeMode] = useState(() => {
+    const savedTheme = localStorage.getItem("themeMode");
+    return savedTheme ? savedTheme : isDarkTheme ? "dark" : "light";
+  });
   const darkTheme = () => setThemeMode("dark");
   const lightTheme = () => setThemeMode("light");
 
   useEffect(() => {
+    localStorage.setItem("themeMode", themeMode);
     document.documentElement.classList.remove("dark", "light");
     document.documentElement.classList.add(themeMode);
   }, [themeMode]);
+  
   return (
     <>
       <ThemeProvider value={{ themeMode, lightTheme, darkTheme }}>
