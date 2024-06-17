@@ -11,14 +11,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { SquarePlus } from "lucide-react";
 import Note from "@/Models/NoteModel";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import addNote from "@/Firebase/AddNote";
 import { useToast } from "../ui/use-toast";
+import NotesContext from "@/contexts/NotesContext";
 
 export function AddNoteBtn() {
   const { toast } = useToast();
+  const { AddNote } = useContext(NotesContext);
   const [note, setNote] = useState<Note>({
     id: "",
     title: "",
@@ -37,7 +38,7 @@ export function AddNoteBtn() {
     if (note.content.trim() === "" && note.title.trim() === "") {
       return;
     }
-    await addNote(note)
+    await AddNote(note)
       .then(() => {
         setNote({
           id: "",
@@ -90,7 +91,7 @@ export function AddNoteBtn() {
             onChange={(e) =>
               setNote((prev) => ({ ...prev, content: e.target.value }))
             }
-            className="text-md h-fit overflow-y-visible rounded-none border border-none border-white bg-transparent text-slate-900 ring-offset-0 focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
+            className="text-md h-64 overflow-y-visible rounded-none border border-none border-white bg-transparent text-slate-900 ring-offset-0 focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
           />
           <DialogFooter className="pt-2 sm:justify-end">
             <DialogClose asChild>
