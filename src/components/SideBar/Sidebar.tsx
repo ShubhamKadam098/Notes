@@ -5,7 +5,7 @@ const Sidebar = () => {
   return (
     <aside
       id="default-sidebar"
-      className="sticky top-14 z-40 hidden max-h-[92vh] w-1/5 max-w-60 -translate-x-full border-r border-slate-300 bg-light-secondary px-3 text-sm transition-transform dark:border-slate-600 dark:bg-dark-secondary sm:translate-x-0 md:block"
+      className="sticky top-14 z-40 hidden max-h-[92vh] w-1/5 max-w-60 -translate-x-full border-r border-slate-300 bg-light-secondary px-3 text-sm shadow-lg transition-transform dark:border-slate-600 dark:bg-dark-secondary sm:translate-x-0 md:block"
       aria-label="Sidebar"
     >
       <div className="overflow-y-autopx-3 h-full py-4">
@@ -43,7 +43,7 @@ const Sidebar = () => {
           <div className="bottom-0">
             <li>
               <Link
-                to=""
+                to="sign-in"
                 className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               >
                 <svg
@@ -55,9 +55,9 @@ const Sidebar = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
@@ -66,7 +66,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to=""
+                to="/sign-up"
                 className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               >
                 <svg
