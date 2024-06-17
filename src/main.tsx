@@ -11,7 +11,7 @@ import Layout from "./Layout";
 import Homepage from "./Pages/Homepage";
 import { Toaster } from "./components/ui/toaster";
 import PageNotFound from "./components/Dummy/PageNotFound";
-import { NotesProvider } from "./contexts/Notes";
+import NotesContextProvider from "./contexts/NotesContextProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,9 +25,9 @@ const router = createBrowserRouter(
 );
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <NotesProvider>
+    <NotesContextProvider>
       <RouterProvider router={router} />
       <Toaster />
-    </NotesProvider>
+    </NotesContextProvider>
   </React.StrictMode>,
 );
