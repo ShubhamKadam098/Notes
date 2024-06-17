@@ -9,13 +9,16 @@ import {
 import Note from "@/Models/NoteModel";
 import EmptyNotes from "../Dummy/EmptyNotes";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Textarea } from "../ui/textarea";
-import UpdateNote from "@/Firebase/UpdateNote";
 import { useToast } from "../ui/use-toast";
+import { Pin, PinOff } from "lucide-react";
+import NotesContext from "@/contexts/NotesContext";
 
 const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
   const { toast } = useToast();
+  const { UpdateNote } = useContext(NotesContext);
+  const [noteId, setNoteId] = useState<string | null>(null);
   const [updatedNote, setUpdatedNote] = useState<Note>({
     id: "",
     title: "",
@@ -27,29 +30,35 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
     createdAt: new Date(),
     updatedAt: new Date(),
   });
+
   const handleClick = (id: string) => {
     const selectedNote = NotesList.find((note) => note.id === id);
     if (selectedNote) {
+      setNoteId(id);
       setUpdatedNote(selectedNote);
     }
   };
+
   const handleSubmit = () => {
-    let id;
-    for (let i = 0; i < NotesList.length; i++) {
-      if (NotesList[i].id === updatedNote.id) {
-        id = i;
-        break;
-      }
+    if (!noteId) {
+      console.error("No note selected");
+      return;
     }
-    if (!id) {
+
+    const index = NotesList.findIndex((note) => note.id === noteId);
+    if (index === -1) {
       console.error("Note not found");
       return;
     }
+
+    const noteToUpdate = NotesList[index];
     if (
-      updatedNote.title === NotesList[id].title &&
-      updatedNote.content === NotesList[id].content
-    )
+      updatedNote.title === noteToUpdate.title &&
+      updatedNote.content === noteToUpdate.content
+    ) {
       return;
+    }
+
     UpdateNote(updatedNote.id, updatedNote)
       .then(() => {
         console.log("Note Updated");
@@ -63,7 +72,6 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
         });
       });
   };
-
   return (
     <>
       <Dialog
@@ -73,25 +81,51 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
         }}
       >
         {NotesList.length > 0 ? (
-          <section className="grid h-full w-full grid-cols-1 flex-wrap gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3">
-            {NotesList.map((note: Note) => {
+          <section className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {NotesList.sort().map((note: Note) => {
+              const dateObject = new Date(note.updatedAt);
+              const date = dateObject.toDateString();
               return (
-                <DialogTrigger>
+                <DialogTrigger key={note.id}>
                   <div
-                    key={note.id}
-                    className="card max-h-[200px] cursor-pointer rounded-lg px-3 py-4 shadow-lg dark:border-slate-600 dark:bg-dark-secondary"
+                    className="mb-6 flex h-64 flex-col justify-between rounded-lg border border-slate-300 bg-light-secondary px-4 py-5 shadow-lg dark:border-slate-700 dark:bg-dark-secondary"
                     onClick={() => {
                       handleClick(note.id);
                     }}
                   >
-                    <div className="card-header">
-                      <h3>{note.title}</h3>
+                    <div className="flex grow flex-col">
+                      <h4 className="mb-3 font-bold text-gray-800 dark:text-white">
+                        {note.title}
+                      </h4>
+                      <p className="max-h-36 grow truncate text-wrap text-start text-sm text-gray-800 dark:text-slate-300">
+                        {note.content}
+                      </p>
                     </div>
-                    <div className="card-body line-clamp-3 max-h-full text-wrap">
-                      <p>{note.content}</p>
-                    </div>
-                    <div className="card-footer">
-                      <p>{note.labels.join(", ")}</p>
+                    <div>
+                      <div className="flex items-center justify-between text-gray-800">
+                        <p className="text-sm text-gray-800 dark:text-slate-300">
+                          {date}
+                        </p>
+                        <button
+                          className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-800 text-white ring-offset-slate-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 dark:bg-slate-500 dark:ring-offset-slate-400"
+                          aria-label="pin note"
+                          role="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            UpdateNote(note.id, {
+                              ...note,
+                              pinned: !note.pinned,
+                            });
+                            note.pinned = !note.pinned;
+                          }}
+                        >
+                          {note.pinned ? (
+                            <PinOff height={17} width={17} />
+                          ) : (
+                            <Pin height={17} width={17} />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </DialogTrigger>
@@ -125,7 +159,7 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
                   content: e.target.value,
                 }))
               }
-              className="text-md h-fit overflow-y-visible rounded-none border border-none border-white bg-transparent text-slate-900 ring-offset-0 focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
+              className="text-md h-64 overflow-y-visible rounded-none border border-none border-white bg-transparent text-slate-900 ring-offset-0 focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
             />
           </DialogHeader>
         </DialogContent>
