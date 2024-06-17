@@ -2,7 +2,7 @@ import Note from "@/Models/NoteModel";
 import { db } from "@/config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-const fetchNotes = async () => {
+const FetchNotes = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "notes"));
     const docsArray = querySnapshot.docs.map((doc) => ({
@@ -18,4 +18,4 @@ const fetchNotes = async () => {
   }
 };
 
-export default fetchNotes;
+export default FetchNotes;

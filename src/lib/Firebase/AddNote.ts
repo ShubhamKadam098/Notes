@@ -2,7 +2,7 @@ import Note from "@/Models/NoteModel";
 import { db } from "@/config/firebase";
 import GenrateNewId from "@/lib/GenrateNewId";
 import { setDoc, doc } from "firebase/firestore";
-const addNote = async (note: Note) => {
+const AddNote = async (note: Note) => {
   note.createdAt = new Date();
   note.updatedAt = new Date();
   note.id = GenrateNewId();
@@ -16,4 +16,4 @@ const addNote = async (note: Note) => {
     throw new Error("Error while adding document");
   }
 };
-export default addNote;
+export default AddNote;
