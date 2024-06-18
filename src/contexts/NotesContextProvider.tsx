@@ -18,7 +18,6 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("NotesProvider mounted");
     FetchNotes();
   }, []);
 
@@ -35,9 +34,6 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
           updatedAt,
         };
       });
-
-      console.log("docsArray", docsArray);
-
       setNotes(docsArray as Note[]);
     } catch (error) {
       console.error("Error getting documents: ", error);
@@ -54,7 +50,6 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       await setDoc(doc(db, "notes", note.id), note);
       await FetchNotes();
-      console.log("Document successfully added!");
     } catch (e) {
       console.error("Error adding document: ", e);
       throw new Error("Error while adding document");

@@ -27,7 +27,6 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("NotesProvider mounted");
     getNotes();
   }, []);
 
