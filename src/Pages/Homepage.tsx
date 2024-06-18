@@ -1,4 +1,3 @@
-import FilterOptions from "@/components/Card/FilterOptions";
 import DisplayCard from "@/components/Card/DisplayCard";
 import { Input } from "@/components/ui/input";
 import { useContext, useState, useMemo } from "react";
@@ -37,7 +36,7 @@ const Homepage = () => {
 
   return (
     <section className="flex h-full max-h-full flex-grow flex-col px-4 py-4">
-      <div className="mx-auto flex w-full max-w-lg items-center space-x-2 py-4">
+      <div className="mx-auto mb-8 flex w-full max-w-lg items-center space-x-2 py-4">
         <Input
           type="text"
           placeholder="Search"
@@ -47,7 +46,6 @@ const Homepage = () => {
         />
         <AddNoteBtn />
       </div>
-      <FilterOptions />
       <div className="flex-grow">
         <DisplayCard NotesList={notesToDisplay} />
       </div>
