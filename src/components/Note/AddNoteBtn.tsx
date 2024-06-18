@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { CirclePlus } from "lucide-react";
 import Note from "@/Models/NoteModel";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
@@ -19,6 +19,7 @@ import NotesContext from "@/contexts/NotesContext";
 
 export function AddNoteBtn() {
   const { toast } = useToast();
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { AddNote } = useContext(NotesContext);
   const [note, setNote] = useState<Note>({
     id: "",
@@ -32,25 +33,27 @@ export function AddNoteBtn() {
     updatedAt: new Date(),
   });
 
-  const handleSubmit = async () => {
-    console.log("inside submit");
+  const resetNote = () => {
+    setNote({
+      id: "",
+      title: "",
+      content: "",
+      labels: [],
+      color: "",
+      pinned: false,
+      archived: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  };
 
+  const handleSubmit = async () => {
     if (note.content.trim() === "" && note.title.trim() === "") {
       return;
     }
     await AddNote(note)
       .then(() => {
-        setNote({
-          id: "",
-          title: "",
-          content: "",
-          labels: [],
-          color: "",
-          pinned: false,
-          archived: false,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
+        resetNote();
       })
       .catch(() => {
         toast({
@@ -83,10 +86,17 @@ export function AddNoteBtn() {
               onChange={(e) =>
                 setNote((prev) => ({ ...prev, title: e.target.value }))
               }
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (textAreaRef.current) textAreaRef.current.focus();
+                }
+              }}
               className="rounded-none border-none border-transparent bg-transparent text-lg font-semibold text-black ring-offset-0 placeholder:text-xl placeholder:font-semibold focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
             />
           </DialogDescription>
           <Textarea
+            ref={textAreaRef}
             placeholder="Take a note... "
             value={note.content}
             onChange={(e) =>
