@@ -9,6 +9,6 @@ export type NotesContextType = {
   FetchNotes: () => Promise<void>;
 };
 
-const NotesContext = createContext<NotesContextType>();
+const NotesContext = createContext<NotesContextType>({} as NotesContextType);
 
 export default NotesContext;
