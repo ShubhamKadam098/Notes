@@ -12,12 +12,12 @@ import { Input } from "../ui/input";
 import { useContext, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { useToast } from "../ui/use-toast";
-import { Pin, PinOff } from "lucide-react";
+import { Pin, PinOff, Trash } from "lucide-react";
 import NotesContext from "@/contexts/NotesContext";
 
 const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
   const { toast } = useToast();
-  const { UpdateNote } = useContext(NotesContext);
+  const { UpdateNote, DeleteNote } = useContext(NotesContext);
   const [noteId, setNoteId] = useState<string | null>(null);
   const [updatedNote, setUpdatedNote] = useState<Note>({
     id: "",
@@ -38,6 +38,21 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
       setUpdatedNote(selectedNote);
     }
   };
+
+  function handleDelete(id: string) {
+    DeleteNote(id)
+      .then(() => {
+        console.log("Note Deleted");
+      })
+      .catch((e) => {
+        console.error(e);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem while deleting note.",
+        });
+      });
+  }
 
   const handleSubmit = () => {
     if (!noteId) {
@@ -106,25 +121,38 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
                         <p className="text-sm text-gray-800 dark:text-slate-300">
                           {date}
                         </p>
-                        <button
-                          className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-800 text-white ring-offset-slate-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 dark:bg-slate-500 dark:ring-offset-slate-400"
-                          aria-label="pin note"
-                          role="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            UpdateNote(note.id, {
-                              ...note,
-                              pinned: !note.pinned,
-                            });
-                            note.pinned = !note.pinned;
-                          }}
-                        >
-                          {note.pinned ? (
-                            <PinOff height={17} width={17} />
-                          ) : (
-                            <Pin height={17} width={17} />
-                          )}
-                        </button>
+                        <div className="flex grow items-center justify-end gap-2">
+                          <button
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-800 text-white ring-offset-slate-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 dark:bg-blue-500 dark:ring-offset-slate-400"
+                            aria-label="pin note"
+                            role="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              UpdateNote(note.id, {
+                                ...note,
+                                pinned: !note.pinned,
+                              });
+                              note.pinned = !note.pinned;
+                            }}
+                          >
+                            {note.pinned ? (
+                              <PinOff height={17} width={17} />
+                            ) : (
+                              <Pin height={17} width={17} />
+                            )}
+                          </button>
+                          <button
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 dark:bg-red-500 dark:ring-offset-slate-400"
+                            aria-label="delete note"
+                            role="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(note.id);
+                            }}
+                          >
+                            <Trash height={17} width={17} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
