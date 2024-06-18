@@ -68,11 +68,11 @@ export function AddNoteBtn() {
         else return;
       }}
     >
-      <DialogTrigger className="c inline-flex h-full items-center whitespace-nowrap rounded-full border border-slate-400 bg-primary bg-yellow-400 px-6 text-sm font-medium text-primary-foreground shadow-lg ring-offset-background transition-colors hover:bg-primary/90 hover:bg-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-blue-400 dark:hover:bg-blue-600">
-        <span className="hidden pr-1 font-semibold dark:text-black md:block">
+      <DialogTrigger className="c inline-flex h-full items-center whitespace-nowrap rounded-full border border-slate-400 bg-primary bg-yellow-400 px-6 text-sm font-medium text-primary-foreground shadow-lg ring-offset-background transition-colors hover:bg-primary/90 hover:bg-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-blue-500 dark:hover:bg-blue-600">
+        <span className="hidden pr-1 font-semibold dark:text-white md:block">
           New
         </span>
-        <CirclePlus className="" />
+        <CirclePlus className="text-white" />
       </DialogTrigger>
       <DialogContent className="bg-light-secondary dark:bg-dark-secondary">
         <DialogHeader>
