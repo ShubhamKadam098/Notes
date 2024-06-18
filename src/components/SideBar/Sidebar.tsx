@@ -31,7 +31,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to=""
+                to="/bin"
                 className="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               >
                 <Trash2 />
