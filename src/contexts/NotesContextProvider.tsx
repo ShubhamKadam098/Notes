@@ -19,12 +19,11 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     console.log("NotesProvider mounted");
-    setLoading(true);
     FetchNotes();
-    setLoading(false);
   }, []);
 
   const FetchNotes = async () => {
+    setLoading(true);
     try {
       const querySnapshot = await getDocs(collection(db, "notes"));
       const docsArray = querySnapshot.docs.map((doc) => {
@@ -42,6 +41,8 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
       setNotes(docsArray as Note[]);
     } catch (error) {
       console.error("Error getting documents: ", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,7 +53,7 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       await setDoc(doc(db, "notes", note.id), note);
-      FetchNotes();
+      await FetchNotes();
       console.log("Document successfully added!");
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -66,7 +67,7 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
       await updateDoc(doc(db, "notes", id), {
         ...updatedNote,
       });
-      FetchNotes();
+      await FetchNotes();
     } catch (e) {
       console.error("Error updating document: ", e);
     }
@@ -75,7 +76,7 @@ const NotesContextProvider = ({ children }: { children: ReactNode }) => {
   const DeleteNote = async (noteId: string) => {
     try {
       await deleteDoc(doc(db, "notes", noteId));
-      FetchNotes();
+      await FetchNotes();
     } catch (e) {
       console.error("Error removing document: ", e);
     }
