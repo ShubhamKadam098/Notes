@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const PageNotFound = () => {
   return (
     <>
-      <div className="flex h-screen w-full flex-col items-center justify-center space-x-8 space-y-16 lg:flex-row lg:space-y-0 2xl:space-x-0">
+      <div className="flex h-svh w-full flex-col items-center justify-center space-x-8 space-y-16 lg:flex-row lg:space-y-0 2xl:space-x-0">
         <div className="flex w-full flex-col items-center justify-center text-center lg:w-1/2 lg:px-2 xl:px-0">
           <p className="text-7xl font-bold tracking-wider text-gray-300 md:text-8xl lg:text-9xl">
             404

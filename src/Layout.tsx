@@ -19,12 +19,12 @@ const Layout = () => {
     document.documentElement.classList.remove("dark", "light");
     document.documentElement.classList.add(themeMode);
   }, [themeMode]);
-  
+
   return (
     <>
       <ThemeProvider value={{ themeMode, lightTheme, darkTheme }}>
         <main className="">
-          <section className="mx-auto flex min-h-screen max-w-screen-2xl flex-col">
+          <section className="mx-auto flex min-h-svh max-w-screen-2xl flex-col">
             <Header />
             <div className="flex flex-grow bg-light-primary dark:bg-dark-primary">
               <Sidebar />
