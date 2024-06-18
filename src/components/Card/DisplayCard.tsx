@@ -96,12 +96,12 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
         }}
       >
         {NotesList.length > 0 ? (
-          <section className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <section className="grid gap-6 transition delay-75 ease-in-out sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {NotesList.sort().map((note: Note) => {
               const dateObject = new Date(note.updatedAt);
               const date = dateObject.toDateString();
               return (
-                <DialogTrigger key={note.id}>
+                <DialogTrigger key={note.id} className="h-[258px] rounded-lg">
                   <div
                     className="mb-6 flex h-64 flex-col justify-between rounded-lg border border-slate-300 bg-light-secondary px-4 py-5 shadow-lg dark:border-slate-700 dark:bg-dark-secondary"
                     onClick={() => {
@@ -123,7 +123,18 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
                         </p>
                         <div className="flex grow items-center justify-end gap-2">
                           <button
-                            className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-800 text-white ring-offset-slate-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 dark:bg-blue-500 dark:ring-offset-slate-400"
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 dark:bg-red-500 dark:ring-offset-slate-400"
+                            aria-label="delete note"
+                            role="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(note.id);
+                            }}
+                          >
+                            <Trash height={17} width={17} />
+                          </button>
+                          <button
+                            className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 dark:bg-blue-500 dark:ring-offset-slate-400"
                             aria-label="pin note"
                             role="button"
                             onClick={(e) => {
@@ -140,17 +151,6 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
                             ) : (
                               <Pin height={17} width={17} />
                             )}
-                          </button>
-                          <button
-                            className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 dark:bg-red-500 dark:ring-offset-slate-400"
-                            aria-label="delete note"
-                            role="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(note.id);
-                            }}
-                          >
-                            <Trash height={17} width={17} />
                           </button>
                         </div>
                       </div>
