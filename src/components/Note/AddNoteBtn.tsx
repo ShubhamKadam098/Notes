@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Input } from "@/components/ui/input";
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, X } from "lucide-react";
 import Note from "@/Models/NoteModel";
 import { useContext, useRef, useState } from "react";
 import { Textarea } from "../ui/textarea";
@@ -104,9 +104,15 @@ export function AddNoteBtn() {
             }
             className="text-md h-64 overflow-y-visible rounded-none border border-none border-white bg-transparent text-slate-900 ring-offset-0 focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
           />
-          <DialogFooter className="pt-2 sm:justify-end">
+          <DialogFooter className="flex flex-row flex-wrap items-center justify-between pt-2 sm:justify-between">
+            <DialogClose asChild onClick={resetNote}>
+              <Button className="flex items-center justify-center gap-1 border border-slate-300 bg-red-400 px-6 shadow transition ease-in hover:translate-y-[2px] hover:bg-red-500 focus:bg-red-500 dark:text-slate-200">
+                <span>Cancel</span>
+                <X height={17} width={17} />
+              </Button>
+            </DialogClose>
             <DialogClose asChild>
-              <Button className="bg-yellow-400 px-6 shadow transition ease-in hover:translate-y-[2px] hover:bg-yellow-500 dark:bg-blue-400 dark:text-slate-200 dark:hover:bg-blue-600 dark:focus:bg-blue-600">
+              <Button className="border border-slate-300 bg-yellow-400 px-6 shadow transition ease-in hover:translate-y-[2px] hover:bg-yellow-500 focus:bg-yellow-500 dark:bg-blue-400 dark:text-slate-200 dark:hover:bg-blue-600 dark:focus:bg-blue-600">
                 Add Note
               </Button>
             </DialogClose>
