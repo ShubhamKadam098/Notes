@@ -106,7 +106,7 @@ export function AddNoteBtn() {
           />
           <DialogFooter className="pt-2 sm:justify-end">
             <DialogClose asChild>
-              <Button className="bg-yellow-400 px-6 shadow transition ease-in hover:translate-y-[2px] hover:bg-yellow-500 dark:bg-blue-400 dark:hover:bg-blue-600">
+              <Button className="bg-yellow-400 px-6 shadow transition ease-in hover:translate-y-[2px] hover:bg-yellow-500 dark:bg-blue-400 dark:text-slate-200 dark:hover:bg-blue-600 dark:focus:bg-blue-600">
                 Add Note
               </Button>
             </DialogClose>
