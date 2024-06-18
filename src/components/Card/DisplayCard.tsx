@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -11,7 +12,7 @@ import { Input } from "../ui/input";
 import { useContext, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { useToast } from "../ui/use-toast";
-import { Pin, PinOff, Trash } from "lucide-react";
+import { Archive, Pin, PinOff, Trash } from "lucide-react";
 import NotesContext from "@/contexts/NotesContext";
 
 const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
@@ -184,6 +185,49 @@ const DisplayCard = ({ NotesList }: { NotesList: Note[] }) => {
               className="text-md h-64 overflow-y-visible rounded-none border border-none border-white bg-transparent text-slate-900 ring-offset-0 focus:border-b focus:border-white focus-visible:border-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 focus-visible:ring-offset-transparent dark:text-white"
             />
           </DialogHeader>
+          <DialogFooter>
+            <div className="flex grow items-center justify-end gap-2">
+              <button
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 dark:bg-blue-500 dark:ring-offset-slate-400"
+                aria-label="pin note"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  UpdateNote(updatedNote.id, {
+                    ...updatedNote,
+                    pinned: !updatedNote.pinned,
+                  });
+                }}
+              >
+                {updatedNote.pinned ? (
+                  <PinOff height={17} width={17} />
+                ) : (
+                  <Pin height={17} width={17} />
+                )}
+              </button>
+              {/* Archieve */}
+              <button
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 dark:bg-orange-500 dark:ring-offset-slate-400"
+                aria-label="delete note"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(updatedNote.id);
+                }}
+              >
+                <Archive height={17} width={17} />
+              </button>
+              {/* Delete */}
+              <button
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white ring-offset-slate-700 focus:outline-none focus:ring-1 focus:ring-black focus:ring-offset-1 dark:bg-red-500 dark:ring-offset-slate-400"
+                aria-label="delete note"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(updatedNote.id);
+                }}
+              >
+                <Trash height={17} width={17} />
+              </button>
+            </div>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
